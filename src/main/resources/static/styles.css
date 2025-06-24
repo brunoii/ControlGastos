@@ -1,0 +1,59 @@
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1055;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+.resumen-box {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.resumen-box p span {
+  font-weight: bold;
+  float: right;
+}
+
+h3 {
+  cursor: pointer;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.titulo-seccion,
+.titulo-subseccion {
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.positivo {
+  color: green;
+  font-weight: bold;
+}
+
+.negativo {
+  color: red;
+  font-weight: bold;
+}
