@@ -3,47 +3,99 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarDatos();
   cargarCategorias();
 
-  document.getElementById('formIngreso')?.addEventListener('submit', guardarIngreso);
-  document.getElementById('formGasto')?.addEventListener('submit', guardarGasto);
-  document.getElementById('esTerceroCheck')?.addEventListener('change', toggleTercero);
-  document.getElementById('cuotasCheck')?.addEventListener('change', toggleCuotas);
-  document.getElementById('usuarioSelect')?.addEventListener('change', actualizarDatos);
-  document.getElementById('mesSelect')?.addEventListener('change', actualizarDatos);
-  
-  document.getElementById('btnNuevoIngreso').addEventListener('click', abrirModalIngreso);
-  document.getElementById('btnNuevoGasto').addEventListener('click', abrirModal);
-  document.getElementById('btnCerrarMes').addEventListener('click', cerrarMes);
+  const formIngreso = document.getElementById('formIngreso');
+  if (formIngreso) {
+    formIngreso.addEventListener('submit', guardarIngreso);
+  }
+
+  const formGasto = document.getElementById('formGasto');
+  if (formGasto) {
+    formGasto.addEventListener('submit', guardarGasto);
+  }
+
+  const esTerceroCheck = document.getElementById('esTerceroCheck');
+  if (esTerceroCheck) {
+    esTerceroCheck.addEventListener('change', toggleTercero);
+  }
+
+  const cuotasCheck = document.getElementById('cuotasCheck');
+  if (cuotasCheck) {
+    cuotasCheck.addEventListener('change', toggleCuotas);
+  }
+
+  const usuarioSelect = document.getElementById('usuarioSelect');
+  if (usuarioSelect) {
+    usuarioSelect.addEventListener('change', actualizarDatos);
+  }
+
+  const mesSelect = document.getElementById('mesSelect');
+  if (mesSelect) {
+    mesSelect.addEventListener('change', actualizarDatos);
+  }
+
+  const btnNuevoIngreso = document.getElementById('btnNuevoIngreso');
+  if (btnNuevoIngreso) {
+    btnNuevoIngreso.addEventListener('click', abrirModalIngreso);
+  }
+
+  const btnNuevoGasto = document.getElementById('btnNuevoGasto');
+  if (btnNuevoGasto) {
+    btnNuevoGasto.addEventListener('click', abrirModal);
+  }
+
+  const btnCerrarMes = document.getElementById('btnCerrarMes');
+  if (btnCerrarMes) {
+    btnCerrarMes.addEventListener('click', cerrarMes);
+  }
 
   // Delegación para editar/eliminar gastos
-  document.getElementById('tablaGastos').addEventListener('click', (e) => {
-	  if (e.target.classList.contains('btn-editar-gasto')) {
-	    const id = e.target.dataset.id;
-	    editarGasto(id);
-	  } else if (e.target.classList.contains('btn-eliminar-gasto')) {
-	    const id = e.target.dataset.id;
-	    eliminarGasto(id);
-	  }
-	  });
-	  
+  const tablaGastos = document.getElementById('tablaGastos');
+  if (tablaGastos) {
+    tablaGastos.addEventListener('click', (e) => {
+      const boton = e.target.closest('button');
+      if (!boton) return;
 
-	  // Delegación para editar/eliminar ingresos
-	  document.getElementById('tablaIngresos').addEventListener('click', (e) => {
-	    if (e.target.classList.contains('btn-editar-ingreso')) {
-	      const id = e.target.dataset.id;
-	      editarIngreso(id);
-	    } else if (e.target.classList.contains('btn-eliminar-ingreso')) {
-	      const id = e.target.dataset.id;
-	      eliminarIngreso(id);
-	    }
-	  });
+      if (boton.classList.contains('btn-editar-gasto')) {
+        const id = boton.dataset.id;
+        editarGasto(id);
+      } else if (boton.classList.contains('btn-eliminar-gasto')) {
+        const id = boton.dataset.id;
+        eliminarGasto(id);
+      }
+    });
+  }
 
-	  // Delegación para editar cuotas (solo editar)
-	  document.getElementById('tablaCuotas').addEventListener('click', (e) => {
-	    if (e.target.classList.contains('btn-editar-gasto')) {
-	      const id = e.target.dataset.id;
-	      editarGasto(id);
-	    }
-	  });
+  // Delegación para editar/eliminar ingresos
+  const tablaIngresos = document.getElementById('tablaIngresos');
+  if (tablaIngresos) {
+    tablaIngresos.addEventListener('click', (e) => {
+      const boton = e.target.closest('button');
+      if (!boton) return;
+
+      if (boton.classList.contains('btn-editar-ingreso')) {
+        const id = boton.dataset.id;
+        editarIngreso(id);
+      } else if (boton.classList.contains('btn-eliminar-ingreso')) {
+        const id = boton.dataset.id;
+        eliminarIngreso(id);
+      }
+    });
+  }
+
+  // Delegación para editar cuotas (solo editar)
+  const tablaCuotas = document.getElementById('tablaCuotas');
+  if (tablaCuotas) {
+    tablaCuotas.addEventListener('click', (e) => {
+      const boton = e.target.closest('button');
+      if (!boton) return;
+
+      if (boton.classList.contains('btn-editar-gasto')) {
+        const id = boton.dataset.id;
+        editarGasto(id);
+      }
+    });
+  }
+
 	  
 });
 
@@ -123,8 +175,11 @@ function renderGastos(gastos) {
 		  <button class="btn btn-sm btn-outline-danger btn-eliminar-gasto" data-id="${g.id}">🗑️</button>
       </td>
     `;
-    if (g.esTercero) tbodyTerceros.appendChild(fila);
-    else tbody.appendChild(fila);
+	if (g.esTercero) {
+	  tbodyTerceros.appendChild(fila);
+	} else {
+	  tbody.appendChild(fila);
+	}
   });
 }
 
@@ -179,7 +234,6 @@ function renderIngresos(ingresos) {
 
 // Modal Gasto
 function abrirModal() {
-	console.log('Abrir modal gasto');
   document.getElementById('modal').classList.remove('hidden');
 }
 function cerrarModal() {
@@ -188,7 +242,6 @@ function cerrarModal() {
 
 // Modal Ingreso
 function abrirModalIngreso() {
-	console.log('Abrir modal ingreso');
   document.getElementById('modalIngreso').classList.remove('hidden');
 }
 function cerrarModalIngreso() {
@@ -337,14 +390,3 @@ async function cerrarMes() {
   }
 }
 
-window.abrirModal = abrirModal;
-window.cerrarModal = cerrarModal;
-window.abrirModalIngreso = abrirModalIngreso;
-window.cerrarModalIngreso = cerrarModalIngreso;
-
-window.editarGasto = editarGasto;
-window.eliminarGasto = eliminarGasto;
-window.editarIngreso = editarIngreso;
-window.eliminarIngreso = eliminarIngreso;
-
-window.toggleTabla = toggleTabla;
