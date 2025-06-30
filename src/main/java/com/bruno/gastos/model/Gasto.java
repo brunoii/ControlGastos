@@ -18,6 +18,9 @@ public class Gasto {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
     
+    @Column(nullable = true)
+    private String cupon;
+
     @ManyToOne
     @JoinColumn(name = "mes_contable_id")
     private MesContable mesContable;
@@ -113,5 +116,6 @@ public class Gasto {
 		this.mesContable = mesContable;
 	}
     
-    
+	public String getCupon() { return cupon; }
+    public void setCupon(String cupon) { this.cupon = cupon; }
 }

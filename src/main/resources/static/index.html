@@ -14,8 +14,8 @@
       <h1 class="h3">Resumen de Gastos</h1>
       <div class="d-flex gap-2">
         <select class="form-select" id="usuarioSelect">
-          <option value="1">Bruno</option>
-          <option value="2">Karina</option>
+          <option value="1">Karina</option>
+          <option value="2">Bruno</option>
         </select>
         <select class="form-select" id="mesSelect"></select>
       </div>
@@ -118,6 +118,18 @@
 	  <!--<button id="btnNuevoIngreso" class="btn btn-success">💰 Nuevo ingreso</button>
 	  <button id="btnNuevoGasto" class="btn btn-primary">➕ Nuevo gasto</button>
 	  <button id="btnCerrarMes" class="btn btn-outline-secondary">📦 Cerrar mes contable</button>-->
+	</div>
+	
+	<!-- Importador resumen Naranja -->
+	<div class="seccion">
+	  <h3>Importar resumen Naranja</h3>
+	  <input type="file" id="inputResumenNaranja" accept=".pdf">
+	  <button onclick="subirResumenNaranja()">Importar resumen Naranja</button>
+	</div>
+	<div class="seccion">
+	  <h3>Importar resumen Santander</h3>
+	  <input type="file" id="inputResumenSantander" accept=".pdf">
+	  <button onclick="subirResumenSantander()">Importar resumen Santander</button>
 	</div>
 	
   </div>

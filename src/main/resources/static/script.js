@@ -271,7 +271,9 @@ async function guardarGasto(e) {
     nombreTercero: form.nombreTercero?.value || null,
     fueReembolsado: form.fueReembolsado?.checked || false,
     cuotas: form.tieneCuotas.checked ? parseInt(form.cuotas.value) : 0,
-    mesInicioCuotas: form.tieneCuotas.checked ? form.mesInicioCuotas.value : null
+	mesInicioCuotas: form.tieneCuotas.checked && form.mesInicioCuotas.value
+	  ? form.mesInicioCuotas.value + '-01'
+	  : null
   };
 
   const url = form.dataset.id ? `/api/gastos/${form.dataset.id}` : '/api/gastos';
@@ -310,7 +312,7 @@ async function editarGasto(id) {
   form.tieneCuotas.checked = gasto.cuotas > 0;
   toggleCuotas({ target: form.tieneCuotas });
   form.cuotas.value = gasto.cuotas || '';
-  form.mesInicioCuotas.value = gasto.mesInicioCuotas || '';
+  form.mesInicioCuotas.value = gasto.mesInicioCuotas ? gasto.mesInicioCuotas.slice(0, 7) : '';
   form.dataset.id = gasto.id;
   abrirModal();
 }
@@ -388,5 +390,44 @@ async function cerrarMes() {
   } else {
     alert('Error al cerrar mes');
   }
+}
+
+async function subirResumenNaranja() {
+  const usuarioId = document.getElementById('usuarioSelect').value;
+  const input = document.getElementById('inputResumenNaranja');
+  const archivo = input.files[0];
+  if (!archivo) return alert("Seleccioná un archivo PDF");
+
+  const formData = new FormData();
+  formData.append("archivo", archivo);
+  formData.append("usuarioId", usuarioId);
+
+  const res = await fetch('/api/importar/naranja', {
+    method: 'POST',
+    body: formData
+  });
+
+  const resultado = await res.text();
+  alert(resultado);
+  actualizarDatos();
+}
+async function subirResumenSantander() {
+  const usuarioId = document.getElementById('usuarioSelect').value;
+  const input = document.getElementById('inputResumenSantander');
+  const archivo = input.files[0];
+  if (!archivo) return alert("Seleccioná un archivo PDF");
+
+  const formData = new FormData();
+  formData.append("archivo", archivo);
+  formData.append("usuarioId", usuarioId);
+
+  const res = await fetch('/api/importar/santander', {
+    method: 'POST',
+    body: formData
+  });
+
+  const resultado = await res.text();
+  alert(resultado);
+  actualizarDatos();
 }
 

@@ -55,6 +55,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		 <!-- iText 7 kernel: núcleo del PDF -->
+    <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>itext7-core</artifactId>
+        <version>7.1.17</version>
+        <type>pom</type>
+    </dependency>
+
+    <!-- O directamente los módulos necesarios -->
 	</dependencies>
 
 	<build>

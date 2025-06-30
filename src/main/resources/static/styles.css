@@ -57,3 +57,13 @@ h3 {
   color: red;
   font-weight: bold;
 }
+
+.seccion {
+	 margin-bottom: 2rem; 
+ }
+.seccion h3 { 
+	cursor: pointer; 
+	background: #f1f1f1; 
+	padding: 10px; 
+	border-radius: 6px; 
+}

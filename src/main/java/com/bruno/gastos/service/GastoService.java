@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bruno.gastos.model.Cuota;
 import com.bruno.gastos.model.Gasto;
+import com.bruno.gastos.model.MedioPago;
 import com.bruno.gastos.model.MesContable;
 import com.bruno.gastos.repository.CuotaRepository;
 import com.bruno.gastos.repository.GastoRepository;
@@ -31,7 +32,11 @@ public class GastoService {
     @Transactional
     public Gasto registrarGasto(Gasto gasto) {
         // Determinar a qué mes contable pertenece la fecha del gasto
-        MesContable mesContable = obtenerMesContableParaFecha(gasto.getFechaOperacion());
+    	LocalDate fechaContable = gasto.getMesInicioCuotas() != null
+    		    ? gasto.getMesInicioCuotas()
+    		    : gasto.getFechaOperacion();
+
+    		MesContable mesContable = obtenerMesContableParaFecha(fechaContable);
         gasto.setMesContable(mesContable);
 
         // Guardar el gasto principal
@@ -71,8 +76,7 @@ public class GastoService {
         MesContable mes = mesContableRepo.findById(mesId).orElse(null);
         if (mes == null) return List.of();
 
-        return gastoRepo.findByUsuarioIdAndFechaOperacionBetween(
-                usuarioId, mes.getFechaInicio(), mes.getFechaFin());
+        return gastoRepo.findByUsuarioIdAndMesContableId(usuarioId, mesId);
     }
     
     private MesContable obtenerMesContableParaFecha(LocalDate fecha) {
@@ -118,7 +122,11 @@ public class GastoService {
         original.setMesInicioCuotas(nuevoGasto.getMesInicioCuotas());
 
         // Asignar mes contable según la fecha de operación
-        MesContable mes = obtenerMesContableParaFecha(nuevoGasto.getFechaOperacion());
+        LocalDate fechaContable = nuevoGasto.getMesInicioCuotas() != null
+        	    ? nuevoGasto.getMesInicioCuotas()
+        	    : nuevoGasto.getFechaOperacion();
+
+        	MesContable mes = obtenerMesContableParaFecha(fechaContable);
         original.setMesContable(mes);
 
         // Guardar el gasto actualizado primero
